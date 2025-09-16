@@ -1,0 +1,15 @@
+# Simple values - only what you actually need
+image:
+  repository: gcr.io/generator-471213/media-generator
+  tag: latest
+
+replicas: 3
+
+service:
+  port: 80
+  targetPort: 5000
+  type: LoadBalancer
+
+env:
+  PORT: "5000"
+  ENVIRONMENT: "production"
