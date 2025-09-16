@@ -10,7 +10,7 @@ app = Flask(__name__)
 def hello():
     return jsonify({
         'message': 'Hello from GKE!',
-        'service': 'media-generator-api',
+        'service': 'flask-example-api',
         'version': '1.0.0'
     })
 
@@ -18,10 +18,10 @@ def hello():
 def health():
     return jsonify({'status': 'healthy'})
 
-@app.route('/api/media')
-def media_endpoint():
+@app.route('/api/example')
+def example_endpoint():
     return jsonify({
-        'message': 'Media processing endpoint',
+        'message': 'Flask template example endpoint',
         'available_formats': ['mp4', 'avi', 'mov'],
         'status': 'ready'
     })
