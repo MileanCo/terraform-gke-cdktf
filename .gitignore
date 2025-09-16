@@ -1,0 +1,34 @@
+# CDKTF generated files
+dist/
+imports/*
+!imports/__init__.py
+cdktf.out/
+cdktf.log
+
+# Terraform files
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.*.tfstate*
+*.terraform.*.tfstate*
+terraform.tfvars
+
+# Authentication and cache files
+gke_gcloud_auth_plugin_cache
+*.kubeconfig
+kubeconfig-*
+.kube/
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
