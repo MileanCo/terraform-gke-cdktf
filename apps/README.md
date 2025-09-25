@@ -2,16 +2,6 @@
 
 This directory contains a sample Flask application that demonstrates how to containerize and deploy applications to your GKE cluster using modern, industry-standard tools.
 
-## Summary of Changes Made
-
-We've moved away from custom scripts to industry-standard tools:
-
-- ❌ **Removed**: Custom `deploy_app.py` script (unnecessary complexity)
-- ✅ **Added**: Standard Docker + Helm deployment workflow
-- ✅ **Added**: Proper Helm chart structure in `../helm-charts/media-generator-simple/`
-- ✅ **Added**: Environment-specific configuration support
-- ✅ **Added**: Dedicated kubeconfig management with `../generate-kubeconfig.sh`
-
 ## Modern Deployment Workflow
 
 ### 1. Build and Push Docker Image
@@ -50,24 +40,46 @@ helm install media-generator ./helm-charts/media-generator-simple
 ### Check Deployment Status
 ```bash
 # View all resources
-./kubectl-gke.sh get all
+kubectl get all
 
 # Check Helm releases
 helm list
 
 # Get service details
-./kubectl-gke.sh get services
+kubectl get services
 ```
 
 ### Test the Endpoints
 ```bash
 # Get the external IP (may take a few minutes to provision)
-./kubectl-gke.sh get services
+kubectl get services
 
-# Test endpoints (replace EXTERNAL_IP with actual IP)
+# Test basic endpoints (replace EXTERNAL_IP with actual IP)
 curl http://EXTERNAL_IP/
 curl http://EXTERNAL_IP/health
 curl http://EXTERNAL_IP/api/media
+
+# Test the media processing endpoint
+curl -X POST http://EXTERNAL_IP/api/process_media \
+  -H "Content-Type: application/json" \
+  -d '{
+    "bucket_name": "your-gcs-bucket",
+    "source_path": "videos/raw",
+    "file_names": ["video1.mp4", "audio1.mp3"],
+    "vclip_timeline": [
+      {"url": "video1.mp4", "start_time": 0, "duration": 5.2},
+      {"url": "video1.mp4", "start_time": 5.2, "duration": 3.8}
+    ]
+  }'
+```
+
+### Use the Test Script
+```bash
+# Test locally
+python tests/test_process_media.py
+
+# Test deployed version (replace with your external IP)
+python tests/test_process_media.py http://EXTERNAL_IP
 ```
 
 ## Local Development
@@ -79,12 +91,12 @@ Test locally before deploying:
 pip install -r requirements.txt
 
 # Run the app locally
-python sample_flask_app.py
+python flask_app.py
 
 # Test endpoints
-curl http://localhost:5000/
-curl http://localhost:5000/health
-curl http://localhost:5000/api/media
+curl http://localhost:5001/
+curl http://localhost:5001/health
+curl http://localhost:5001/api/media
 ```
 
 ## Application Management

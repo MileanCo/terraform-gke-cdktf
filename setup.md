@@ -9,8 +9,8 @@ terraform-gke-cdktf/
 ├── terraform.tfvars        # Configuration variables
 ├── deploy_app.py          # Python script to deploy apps to GKE
 ├── README.md              # Complete documentation
-├── examples/              # Sample Flask application
-│   ├── sample_flask_app.py
+├── apps/              # Sample Flask application
+│   ├── flask_app.py
 │   ├── Dockerfile
 │   ├── requirements.txt
 │   └── README.md
@@ -63,7 +63,7 @@ gcloud container clusters get-credentials $CLUSTER_NAME --region $REGION --proje
 
 ### 4. **Deploy a sample application**:
 ```bash
-# First, build and push your Docker image (see examples/README.md)
+# First, build and push your Docker image (see apps/README.md)
 # Then deploy it:
 python deploy_app.py sample-flask-app gcr.io/your-project/sample-app:latest 5000
 ```
@@ -92,7 +92,7 @@ python deploy_app.py sample-flask-app gcr.io/your-project/sample-app:latest 5000
 
 - Run `cdktf --help` to see all available commands
 - Check `README.md` for detailed documentation
-- Look at `examples/README.md` for application deployment examples
+- Look at `apps/README.md` for application deployment examples
 - Use `kubectl get services` to monitor your deployments
 
 You now have a complete, production-ready setup for managing GKE with Python! The beauty of CDKTF is that you can leverage all of Python's capabilities while still getting the power of Terraform for infrastructure management.

@@ -20,6 +20,7 @@ kubeconfig-*
 .kube/
 *.pem
 *.key
+service-account-key.json
 
 # Python
 __pycache__/
@@ -27,7 +28,6 @@ __pycache__/
 *$py.class
 .venv/
 venv/
-.env
 
 # OS files
 .DS_Store

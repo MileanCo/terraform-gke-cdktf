@@ -10,12 +10,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
-# Expose port
-EXPOSE 5000
-
 # Set environment variables
-ENV FLASK_APP=sample_flask_app.py
+ENV FLASK_APP=flask_app.py
 ENV PYTHONUNBUFFERED=1
 
+# Default port (can be overridden by .env file at runtime)
+ENV PORT=5001
+
+# Expose port dynamically based on PORT environment variable
+EXPOSE $PORT
+
 # Run the application
-CMD ["python", "sample_flask_app.py"]
+CMD ["python", "flask_app.py"]
